@@ -21,7 +21,6 @@ def queryCreateUser():
             data_from_api = '{"status code": 200, "success":true,"message":"Success Create User"}'
             respone = json.loads(data_from_api)
             return respone
-            return respone
         else:
             return showMessage()
 
