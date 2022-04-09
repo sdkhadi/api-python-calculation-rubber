@@ -18,8 +18,3 @@ Run Apps
 ```bash
 cd app && python main.py
 ```
-Host: sql6.freesqldatabase.com
-Database name: sql6483963
-Database user: sql6483963
-Database password: h94NZMyai8
-Port number: 3306
