@@ -1,3 +1,6 @@
+from tkinter.messagebox import NO
+
+from pymysql import NULL
 from app import app
 from flask import jsonify
 import json
@@ -12,17 +15,20 @@ def create_users():
     _phone = _json['phone']
     _address = _json['address']	
     if _name and _email and _phone and _address and request.method == 'POST':
-        result = queryPostData("INSERT INTO users(name, email, phone, address) VALUES(%s, %s, %s, %s)",(_name, _email, _phone, _address))
-        if result:
+        checkEmail = queryGetOneData("SELECT email FROM users WHERE email =%s", _email)
+        print(checkEmail)
+        if checkEmail is None:
+            result = queryPostData("INSERT INTO users(name, email, phone, address) VALUES(%s, %s, %s, %s)",(_name, _email, _phone, _address))
             return result
-    else:
-        return showMessage()
+        else:
+            return showMessage("User Already Exist",404)
+              
 @app.route('/users')
 def users():
     result = queryGetAll("SELECT id, name, email, phone, address FROM users",None)
-    respone = jsonify(result)
-    respone.status_code = 200
-    return respone
+    response = jsonify(result)
+    response.status_code = 200
+    return response
 
 @app.route('/users/<users_id>', methods=['GET'])
 def users_details(users_id):

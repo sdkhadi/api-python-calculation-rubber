@@ -20,7 +20,7 @@ def queryPostData(query,bindData):
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(query,bindData)
         conn.commit()
-        result = '{"status code": 200, "success":true,"message":"Success Post Data"}'
+        result = '{"status_code": 200, "success":true,"message":"Success Post Data"}'
         respone = json.loads(result)
         return respone
     except Exception as e:
@@ -35,9 +35,13 @@ def queryGetOneData(query,params):
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(query, params)
         empRow = cursor.fetchone()
-        respone = jsonify(empRow)
-        respone.status_code = 200
-        return respone
+        if empRow is None:
+            return empRow
+        else:
+            respone = jsonify(empRow)
+            respone.status_code = 200
+            return respone
+                   
     except Exception as e:
         print(e)
     finally:

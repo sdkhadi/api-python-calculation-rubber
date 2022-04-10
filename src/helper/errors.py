@@ -2,11 +2,11 @@ from app import app
 from flask import request,jsonify
 
 @app.errorhandler(404)
-def showMessage(error=None):
+def showMessage(errorMessage,statusCode):
     message = {
-        'status': 404,
-        'message': 'Record not found: ' + request.url,
+        'status': statusCode,
+        'message': errorMessage,
     }
     respone = jsonify(message)
-    respone.status_code = 404
+    respone.status_code = statusCode
     return respone
